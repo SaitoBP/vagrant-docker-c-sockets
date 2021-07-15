@@ -1,0 +1,6 @@
+# Ignore server builder folder
+/server/build/server
+
+.vagrant
+
+.vscode

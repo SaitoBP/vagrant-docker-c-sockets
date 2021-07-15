@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Get library from local keycloak server -->
+    <script src="http://192.168.0.10:8080/auth/js/keycloak.js" type="text/javascript"></script>
+
+    <title>Client</title>
+  </head>
+
+  <body onload="initKeycloak()">
+    <h1>CLIENT</h1>
+
+    <a href="index.html">Go to Index</a>
+    <a href="anything.html">Go to Not Found</a>
+
+    <button onclick="handleLogout()">Logout</button>
+
+    <script type="text/javascript">
+      var keycloak = new Keycloak({
+        url: 'http://192.168.0.10:8080/auth/',
+        realm: 'Frontend',
+        clientId: 'frontend',
+      })
+
+      function initKeycloak() {
+        keycloak
+          .init({ onLoad: 'login-required' })
+          .then(function (authenticated) {
+            alert(authenticated ? 'Is Authenicathed' : 'Is Not Authenicathed')
+          })
+          .catch(function () {
+            alert('Failed to Initialize')
+          })
+      }
+
+      function handleLogout() {
+        keycloak.logout({ redirectUri: 'http://192.168.0.10/' })
+      }
+    </script>
+  </body>
+</html>
